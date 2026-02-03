@@ -9,6 +9,20 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/element-ui@2.15.3/lib/theme-chalk/index.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css">
   <script src="https://js.sentry-cdn.com/219f636ac7bde5edab2c3e16885cb535.min.js" crossorigin="anonymous"></script>
+  <style>
+    /* 底部消息提示样式 */
+    .el-message {
+      top: auto !important;
+      bottom: 40px !important;
+      left: 50% !important;
+      transform: translateX(-50%) !important;
+    }
+    .el-message-box__wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  </style>
 </head>
 <body>
   <div id="app">
@@ -114,6 +128,7 @@
                 <el-dropdown-item command="dataSaver" :class="{ 'el-dropdown-menu__item--selected': loadMode === 'dataSaver' }"><i class="fas fa-bolt"></i> 省流模式</el-dropdown-item>
                 <el-dropdown-item command="noImage" :class="{ 'el-dropdown-menu__item--selected': loadMode === 'noImage' }"><i class="fas fa-eye-slash"></i> 无图模式</el-dropdown-item>
                 <el-dropdown-item command="safeMode" divided :class="{ 'el-dropdown-menu__item--selected': safeMode }"><i class="fas fa-shield-alt"></i> {{ safeMode ? '✓' : '' }} 安全模式(NSFW)</el-dropdown-item>
+                <el-dropdown-item command="loginBackground" divided><i class="fas fa-image"></i> 登录页背景设置</el-dropdown-item>
               </el-dropdown-menu>
             </el-dropdown>
             <i class="fas fa-sign-out-alt" @click="handleLogout"></i>
@@ -1112,12 +1127,66 @@
           this.safeMode = !this.safeMode;
           localStorage.setItem('safeMode', this.safeMode);
           this.$message.success(this.safeMode ? '安全模式已开启' : '安全模式已关闭');
+        } else if (command === 'loginBackground') {
+          this.showLoginBackgroundSettings();
         } else {
           this.loadMode = command;
           localStorage.setItem('loadMode', command);
           const modeNames = { normal: '正常模式', dataSaver: '省流模式', noImage: '无图模式' };
           this.$message.success(`已切换为${modeNames[command]}`);
         }
+      },
+      // 登录页背景设置
+      showLoginBackgroundSettings() {
+        const currentBg = localStorage.getItem('loginBackgroundUrl') || '';
+        const currentMode = localStorage.getItem('loginBackgroundMode') || 'gradient';
+        
+        const html = `
+          <div style="line-height: 1.8;">
+            <p style="margin-bottom: 12px;"><b>选择背景模式：</b></p>
+            <div style="margin-bottom: 16px;">
+              <label style="display: block; margin: 8px 0; cursor: pointer;">
+                <input type="radio" name="bgMode" value="gradient" ${currentMode === 'gradient' ? 'checked' : ''}> 
+                <i class="fas fa-palette" style="margin: 0 8px;"></i>默认渐变色
+              </label>
+              <label style="display: block; margin: 8px 0; cursor: pointer;">
+                <input type="radio" name="bgMode" value="image" ${currentMode === 'image' ? 'checked' : ''}> 
+                <i class="fas fa-image" style="margin: 0 8px;"></i>自定义图片
+              </label>
+              <label style="display: block; margin: 8px 0; cursor: pointer;">
+                <input type="radio" name="bgMode" value="bing" ${currentMode === 'bing' ? 'checked' : ''}> 
+                <i class="fas fa-globe" style="margin: 0 8px;"></i>Bing 每日壁纸
+              </label>
+            </div>
+            <p style="margin-bottom: 8px;"><b>自定义图片 URL：</b></p>
+            <input type="text" id="bgUrlInput" value="${currentBg}" 
+              placeholder="输入图片链接，如 https://example.com/bg.jpg"
+              style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 8px; margin-bottom: 8px;">
+            <p style="color: #999; font-size: 12px;">
+              <i class="fas fa-info-circle"></i> 
+              提示：可以使用本站上传的图片链接，或者任意外部图片链接
+            </p>
+          </div>
+        `;
+        
+        this.$alert(html, '登录页背景设置', {
+          dangerouslyUseHTMLString: true,
+          showCancelButton: true,
+          confirmButtonText: '保存',
+          cancelButtonText: '取消',
+          beforeClose: (action, instance, done) => {
+            if (action === 'confirm') {
+              const mode = document.querySelector('input[name="bgMode"]:checked')?.value || 'gradient';
+              const url = document.getElementById('bgUrlInput')?.value?.trim() || '';
+              
+              localStorage.setItem('loginBackgroundMode', mode);
+              localStorage.setItem('loginBackgroundUrl', url);
+              
+              this.$message.success('背景设置已保存');
+            }
+            done();
+          }
+        });
       },
       // 根据加载模式获取图片显示状态
       shouldShowImage(item) {
