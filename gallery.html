@@ -353,10 +353,10 @@
       box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
     }
 
-    /* iframe 容器 - 85% 屏幕宽高 */
+    /* iframe 容器 - 90% 宽度，80% 高度 */
     .preview-modal .iframe-container {
-      width: 85vw;
-      height: 85vh;
+      width: 90vw;
+      height: 80vh;
       position: relative;
       border-radius: 8px;
       overflow: hidden;
@@ -1144,12 +1144,13 @@
         },
 
         previewImage(img) {
-          // 使用统一媒体预览服务
+          // 文件信息
           const fileName = img.metadata?.fileName || img.name;
+          // 构造绝对直链 URL（必须是完整的 https:// 链接）
           const fileUrl = `${this.baseURL}/file/${img.name}`;
           const ext = fileName.split('.').pop().toLowerCase();
           
-          // 图片类型 - 保持原生预览
+          // 图片类型 - 保持原生 Lightbox 预览
           const imageExts = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'bmp', 'svg', 'ico'];
           if (imageExts.includes(ext)) {
             this.previewData = {
@@ -1167,14 +1168,14 @@
           const docExts = ['pdf', 'txt', 'doc', 'docx'];
           
           if (videoExts.includes(ext) || audioExts.includes(ext) || docExts.includes(ext)) {
-            const params = new URLSearchParams({
-              url: fileUrl,
-              title: fileName,
-              autoplay: '1'
-            });
+            // 构造 iframe URL - 必须对参数进行 encodeURIComponent 编码
+            const targetUrl = encodeURIComponent(fileUrl);
+            const targetTitle = encodeURIComponent(fileName);
+            const iframeSrc = `${PREVIEW_SERVICE_BASE}/preview?url=${targetUrl}&title=${targetTitle}&autoplay=1`;
+            
             this.previewData = {
               type: 'iframe',
-              iframeUrl: `${PREVIEW_SERVICE_BASE}/preview?${params.toString()}`,
+              iframeUrl: iframeSrc,
               url: fileUrl,
               fileName: fileName,
               img: img
@@ -1182,7 +1183,7 @@
             return;
           }
           
-          // 其他类型 - 直接下载
+          // 其他类型（.zip, .exe 等）- 直接下载
           this.downloadImage(img);
         },
 

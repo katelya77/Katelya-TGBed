@@ -739,10 +739,10 @@
       border-radius: 8px;
     }
 
-    /* iframe 容器 - 85% 屏幕宽高 */
+    /* iframe 容器 - 90% 宽度，80% 高度 */
     .preview-modal .iframe-container {
-      width: 85vw;
-      height: 85vh;
+      width: 90vw;
+      height: 80vh;
       position: relative;
       border-radius: 8px;
       overflow: hidden;
@@ -1967,7 +1967,7 @@
           link.click();
         },
 
-        // 预览图片（简单模式 - 直接显示图片）
+        // 预览图片（原生 Lightbox 模式）
         previewImage(url) {
           this.previewData = {
             type: 'native-image',
@@ -1978,10 +1978,11 @@
         // 打开预览页面 - 使用统一媒体预览服务
         openPreview(file) {
           const fileName = file.name || file.fileName;
+          // file.url 已经是绝对直链（如 https://pan.katelya.eu.org/file/xxx.mp4）
           const fileUrl = file.url;
           const ext = fileName.split('.').pop().toLowerCase();
           
-          // 图片类型 - 保持原生预览
+          // 图片类型 - 保持原生 Lightbox 预览
           const imageExts = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'bmp', 'svg', 'ico'];
           if (imageExts.includes(ext)) {
             this.previewData = {
@@ -1998,14 +1999,14 @@
           const docExts = ['pdf', 'txt', 'doc', 'docx'];
           
           if (videoExts.includes(ext) || audioExts.includes(ext) || docExts.includes(ext)) {
-            const params = new URLSearchParams({
-              url: fileUrl,
-              title: fileName,
-              autoplay: '1'
-            });
+            // 构造 iframe URL - 必须对参数进行 encodeURIComponent 编码
+            const targetUrl = encodeURIComponent(fileUrl);
+            const targetTitle = encodeURIComponent(fileName);
+            const iframeSrc = `${PREVIEW_SERVICE_BASE}/preview?url=${targetUrl}&title=${targetTitle}&autoplay=1`;
+            
             this.previewData = {
               type: 'iframe',
-              iframeUrl: `${PREVIEW_SERVICE_BASE}/preview?${params.toString()}`,
+              iframeUrl: iframeSrc,
               url: fileUrl,
               fileName: fileName
             };
