@@ -1,88 +1,116 @@
+<div align="center">
+
 # Katelya-TGBed
 
-Free Image/File Hosting solution, Flickr/imgur alternative. Using Cloudflare Pages and Telegram.
+> 🖼️ Free Image/File Hosting Solution, based on Cloudflare Pages and Telegram
 
-English|[中文](README.md)
+**English** | [中文](README.md)
 
-Use tg channel/chat for storage
+<br>
 
-How to use?
+![GitHub stars](https://img.shields.io/github/stars/katelya77/Katelya-TGBed?style=flat-square)
+![GitHub forks](https://img.shields.io/github/forks/katelya77/Katelya-TGBed?style=flat-square)
+![GitHub license](https://img.shields.io/github/license/katelya77/Katelya-TGBed?style=flat-square)
 
-First, you need to create a new telegram bot to obtain the token and a telegram channel to obtain Chat_ID
+[![Deploy to Cloudflare Pages](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/katelya77/Katelya-TGBed)
 
-## How to Obtain `Bot_Token` and `Chat_ID` for Telegram
-
-If you don't have a Telegram account yet, please create one first. Then, follow these steps to get the `Bot_Token` and `Chat_ID`:
-
-1. **Get the `Bot_Token`**
-   - In Telegram, send the command `/newbot` to [@BotFather](https://t.me/BotFather), and follow the prompts to input your bot's name and username. Once successfully created, you will receive a `Bot_Token`, which is used to interact with the Telegram API.
-
-2. **Set the bot as a channel administrator**
-   - Create a new channel and, after entering the channel, go to channel settings. Add the bot you just created as a channel administrator, so it can send messages.
-
-3. **Get the `Chat_ID`**
-   - Use [@GetTheirIDBot](https://t.me/GetTheirIDBot) to get your channel ID. Send a message to this bot and follow the instructions to receive your `Chat_ID` (the ID of your channel).
-
-## Deployment
-
-### Preparation
-
-The only thing you need to prepare in advance is a Cloudflare account
-
-### Step by Step Instruction
-
-3 simple steps to deploy this project and have your own image hosting
-
-1. Fork this repository (Note: In order to make this work. You have to using Git or Wrangler CLI to deploy this project. [Document](https://developers.cloudflare.com/pages/functions/get-started/#deploy-your-function))
-
-2. Open the Cloudflare Dashboard, enter the Pages management page, choose to create a project, then choose `Connecting to the Git Provider`
-
-3. Follow the prompts on the page to enter the project name, select the git repository you need to connect to, then click `Deploy`
-
-## Features
-
-1. Unlimited number of images stored, you can upload an unlimited number of images
-
-2. No need to buy a server, hosted on Cloudflare's network, when the use does not exceed Cloudflare's free quota, completely free
-
-3. No need to buy a domain name, you can use the free second-level domain name `*.pages.dev` provided by Cloudflare Pages, and also support binding custom domain names
-
-4. Support image review API, can be opened as needed, after opening undesirable images will be automatically blocked, no longer loaded
-
-### Add custom domains
-
-Inside the custom domain of pages, bind the domain name that exists in your Cloudflare account, the domain name hosted in cloudflare, will automatically modify the dns record
-
-### Setup image review API
-
-1. Please go to [https://moderatecontent.com/](https://moderatecontent.com/) to register and get a free API key for reviewing image content
-
-2. Open the settings of Cloudflare Pages, click `Settings`, `Environment Variables`, `Add Environment Variables` in turn
-
-3. Add a `variable` name as `ModerateContentApiKey`, `value` as the `API key` you just got in the first step, click `Save` to
-
-Note: Since the changes will take effect on the next deployment, you may need to go to the `Deploy` page and redeploy the project
-
-When image review is enabled, the first time image load will be slow because it takes time to review, but the subsequent image load will not be affected due to the existence of cache
-
-### Limitations
-
-1. Since the image files are actually stored in Telegraph, Telegraph limits the size of uploaded images to a maximum of 5MB
-
-2. Due to the use of Cloudflare's network, the loading speed of images may not be guaranteed in some areas.
-
-3. The free version of Cloudflare Function is limited to 100,000 requests per day (i.e. the total number of uploads or loads of images cannot exceed 100,000), if this is exceeded, you may need to choose to purchase the paid package of Cloudflare Function.
+</div>
 
 ---
 
-## 🙏 Acknowledgments
+## 📸 Screenshots
 
-This project is inspired by:
+<table>
+  <tr>
+    <td width="50%">
+      <img src="https://github.com/user-attachments/assets/bfdd1fa0-e3e8-44d7-8379-f54a3d6a048b" alt="Upload Page" style="width:100%">
+    </td>
+    <td width="50%">
+      <img src="https://github.com/user-attachments/assets/20c8dad5-cf7b-4e65-a662-ccc21deef03a" alt="Gallery View" style="width:100%">
+    </td>
+  </tr>
+  <tr>
+    <td width="50%">
+      <img src="https://github.com/user-attachments/assets/4c3e32b0-1acd-4152-a51f-d9d44d27a2a9" alt="Admin Dashboard" style="width:100%">
+    </td>
+    <td width="50%">
+      <img src="https://github.com/user-attachments/assets/0da27a87-111c-429b-8071-b11d3202bca2" alt="File Details" style="width:100%">
+    </td>
+  </tr>
+</table>
 
-- [Telegraph-Image](https://github.com/cf-pages/Telegraph-Image) - Original inspiration
+## ✨ Features
+
+- 📦 **Unlimited Storage** - Upload an unlimited number of images and files.
+- 💰 **Completely Free** - Hosted on Cloudflare, zero cost within free tier limits.
+- 🌐 **Free Domain** - Uses `*.pages.dev` subdomain, supports custom domains.
+- 🔒 **Content Moderation** - Optional image moderation API to automatically block inappropriate content.
+- 📁 **Multi-format Support** - Supports images, videos, audio, documents, archives, etc.
+- 👁️ **Online Preview** - Supports previewing images, videos, audio, and documents (pdf, docx, txt).
+- 🚀 **Multipart Upload** - Supports files up to 100MB (requires R2).
+- 🎨 **Multiple Views** - Grid, list, and waterfall layout management interfaces.
+- 🗂️ **Storage Classification** - Visually distinguish between Telegram and R2 stored files.
 
 ---
 
-## 📄 License
+## 🚀 Quick Deployment
 
-MIT License
+### Prerequisites
+
+- Cloudflare Account
+- Telegram Account
+
+### Step 1: Get Telegram Credentials
+
+1. **Get Bot Token**
+   - Send `/newbot` to [@BotFather](https://t.me/BotFather).
+   - Follow the prompts to create a bot and get the `BOT_TOKEN`.
+
+2. **Create Channel & Add Bot**
+   - Create a new Telegram Channel.
+   - Add your bot to the channel as an **Administrator**.
+
+3. **Get Chat ID**
+   - Send a message to [@VersaToolsBot](https://t.me/VersaToolsBot) or [@GetTheirIDBot](https://t.me/GetTheirIDBot) to get your Channel ID.
+
+### Step 2: Deploy to Cloudflare
+
+1. **Fork this Repository**
+
+2. **Create Pages Project**
+   - Log in to [Cloudflare Dashboard](https://dash.cloudflare.com).
+   - Go to `Workers & Pages` → `Create Application` → `Pages` → `Connect to Git`.
+   - Select the forked repository and click **Begin setup**.
+
+3. **Configure Environment Variables**
+   - Go to Project `Settings` → `Environment variables`.
+   - Add the required variables:
+
+| Variable Name | Description | Required |
+| :--- | :--- | :---: |
+| `TG_Bot_Token` | Telegram Bot Token | ✅ |
+| `TG_Chat_ID` | Telegram Channel ID | ✅ |
+| `BASIC_USER` | Admin Username | Optional |
+| `BASIC_PASS` | Admin Password | Optional |
+
+**Redeploy** - You must redeploy the project after adding environment variables for them to take effect.
+
+---
+
+## 📦 Storage Configuration
+
+### KV Storage (Image Management)
+
+To enable the gallery and management features, you must configure KV:
+
+1. Cloudflare Dashboard → `Workers & Pages` → `KV`.
+2. Click `Create a Namespace`, name it `katelya-tgbed`.
+3. Go to Pages Project → `Settings` → `Functions` → `KV namespace bindings`.
+4. Add binding: Variable name `img_url`, select the namespace you created.
+5. Redeploy the project.
+
+### R2 Storage (Large File Support, Optional)
+
+Configure R2 to support file uploads up to 100MB:
+
+1. **Create Bucket

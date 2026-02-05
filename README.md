@@ -1,10 +1,43 @@
+<div align="center">
+
 # Katelya-TGBed
 
 > 🖼️ 免费图片/文件托管解决方案，基于 Cloudflare Pages 和 Telegram
 
-[English](README-EN.md) | 中文
+[English](README-EN.md) | **中文**
+
+<br>
+
+![GitHub stars](https://img.shields.io/github/stars/katelya77/Katelya-TGBed?style=flat-square)
+![GitHub forks](https://img.shields.io/github/forks/katelya77/Katelya-TGBed?style=flat-square)
+![GitHub license](https://img.shields.io/github/license/katelya77/Katelya-TGBed?style=flat-square)
+
+[![Deploy to Cloudflare Pages](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/katelya77/Katelya-TGBed)
+
+</div>
 
 ---
+
+## 📸 效果图
+
+<table>
+  <tr>
+    <td width="50%">
+      <img src="https://github.com/user-attachments/assets/bfdd1fa0-e3e8-44d7-8379-f54a3d6a048b" alt="首页上传" style="width:100%">
+    </td>
+    <td width="50%">
+      <img src="https://github.com/user-attachments/assets/20c8dad5-cf7b-4e65-a662-ccc21deef03a" alt="图片浏览" style="width:100%">
+    </td>
+  </tr>
+  <tr>
+    <td width="50%">
+      <img src="https://github.com/user-attachments/assets/4c3e32b0-1acd-4152-a51f-d9d44d27a2a9" alt="后台管理" style="width:100%">
+    </td>
+    <td width="50%">
+      <img src="https://github.com/user-attachments/assets/0da27a87-111c-429b-8071-b11d3202bca2" alt="文件详情" style="width:100%">
+    </td>
+  </tr>
+</table>
 
 ## ✨ 功能特性
 
@@ -13,6 +46,7 @@
 - 🌐 **免费域名** - 使用 `*.pages.dev` 二级域名，也支持自定义域名
 - 🔒 **内容审核** - 可选的图片审核 API，自动屏蔽不良内容
 - 📁 **多格式支持** - 图片、视频、音频、文档、压缩包等
+- 👁️ **在线预览** - 支持图片、视频、音频、文档（pdf、docx、txt）格式的预览
 - 🚀 **分片上传** - 支持最大 100MB 文件（配合 R2）
 - 🎨 **多种视图** - 网格、列表、瀑布流多种管理界面
 - 🗂️ **存储分类** - 直观区分 Telegram 和 R2 存储的文件
@@ -53,7 +87,7 @@
    - 添加必需变量：
 
 | 变量名 | 说明 | 必需 |
-| --- | --- | --- |
+| :--- | :--- | :---: |
 | `TG_Bot_Token` | Telegram Bot Token | ✅ |
 | `TG_Chat_ID` | Telegram 频道 ID | ✅ |
 | `BASIC_USER` | 管理后台用户名 | 可选 |
@@ -96,7 +130,7 @@
 ## 🔧 高级配置
 
 | 变量名 | 说明 | 默认值 |
-| --- | --- | --- |
+| :--- | :--- | :--- |
 | `ModerateContentApiKey` | 图片审核 API Key（从 [moderatecontent.com](https://moderatecontent.com) 获取） | - |
 | `WhiteList_Mode` | 白名单模式，仅白名单图片可加载 | `false` |
 | `USE_R2` | 启用 R2 存储 | `false` |
@@ -107,7 +141,7 @@
 ## 📱 页面说明
 
 | 页面 | 路径 | 说明 |
-| --- | --- | --- |
+| :--- | :--- | :--- |
 | 首页/上传 | `/` | 批量上传、拖拽、粘贴上传 |
 | 图片浏览 | `/gallery.html` | 图片网格浏览 |
 | 管理后台 | `/admin.html` | 文件管理、黑白名单 |
@@ -150,3 +184,9 @@
 ## 📄 许可证
 
 MIT License
+
+---
+
+## 🌟 Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=katelya77/Katelya-TGBed&type=Date)](https://star-history.com/#katelya77/Katelya-TGBed&Date)
